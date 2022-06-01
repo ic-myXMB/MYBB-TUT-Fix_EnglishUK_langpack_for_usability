@@ -1,4 +1,4 @@
-# MYBB-TUT-Fix_EnglishUK_langpack_for_usabilty
+# MYBB-TUT-Fix_EnglishUK_langpack_for_usability
 
 
 [For 1.8] - [Tutorial] - Fix English (UK) Language pack to make it usable and bring it up to current
@@ -8,7 +8,7 @@
 
 For Tutorial:
 
-https://github.com/ic-myXMB/MYBB-TUT-Fix_EnglishUK_langpack_for_usabilty/blob/main/TUT-Fix_EnglishUK_langpack_for_usabilty.txt
+https://github.com/ic-myXMB/MYBB-TUT-Fix_EnglishUK_langpack_for_usability/blob/main/TUT-Fix_EnglishUK_langpack_for_usabilty.txt
 
 
 Link to language pack that needs fix:
