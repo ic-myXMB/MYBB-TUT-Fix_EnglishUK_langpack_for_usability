@@ -1,0 +1,354 @@
+[For 1.8] - [Tutorial] - Fix English (UK) Language pack to make it usable and bring it up to current
+
+
+* Tutorial credits: ic_myXMB 
+* The tutorial is free to re-share as long as you retain any mentioned credits
+
+
+So..., Having a Problem installing British English (UK) language pack???
+
+As the question states: "Problem installing British English (UK) language pack" and as many have noticed over the years is that the first issue is of a missing file making the lang pack not recognized due to such missing.
+
+ I figured I would comment on the experience of same and further now years later again using the 1.8.6 dev pkg for English Lang (UK) now on 1830 as such subject matter is relative.
+
+Just some simple things quickly noticed as of late while using the existing lang pack ( Build #1 (dev) 2016-03-09, 09:25 PM https://community.mybb.com/mods.php?action=view&pid=667 ) on 1830 while translating some plugins:
+
+As noted above the initial issue is firstly: the pkg is missing "englishgb.php", that was then when it was released as a lang pack in 2016 and still is correct and as such, one needs to be created and added for "English (UK)".
+
+
+So let us begin discussing how to fix such to make the lang pack recognized and then bring the lang pack up to current for usage.
+
+Firstly, download the lang pack:
+
+https://community.mybb.com/mods.php?action=view&pid=667
+
+
+Now, to discuss creating the missing file:
+
+Creation of such is rather self explanatory.
+
+For example here is the current english.php file you can base off of:
+
+[code]
+<?php
+/**
+ * MyBB 1.8 English Language Pack
+ * Copyright 2014 MyBB Group, All Rights Reserved
+ *
+ */
+
+// The friendly name of the language
+$langinfo['name'] = "English (American)";
+
+// The author of the language
+$langinfo['author'] = "MyBB Group";
+
+// The language authors website
+$langinfo['website'] = "https://mybb.com/";
+
+// The documentation site link
+//$langinfo['docs_link'] = "";
+
+// The documentation FAQs site link
+//$langinfo['common_issues_link'] = "";
+
+// The support website link
+//$langinfo['support_link'] = "";
+
+// The additional website name
+//$langinfo['additional_name'] = " ";
+
+// Compatible version of MyBB
+$langinfo['version'] = "1828";
+
+// Sets if the translation includes the Admin CP (1 = yes, 0 = no)
+$langinfo['admin'] = 1;
+
+// Sets if the language is RTL (Right to Left) (1 = yes, 0 = no)
+$langinfo['rtl'] = 0;
+
+// Sets the lang in the <html> on all pages
+$langinfo['htmllang'] = "en";
+
+// Sets the character set, blank uses the default.
+$langinfo['charset'] = "UTF-8";
+[/code]
+
+As is, there is an issue I want to make note of and will do that after the creation of the new gb file:
+
+So in theory you can just make your en gb file englishgb.php like so:
+
+[code]
+<?php
+/**
+ * MyBB 1.8 English GB Language Pack (UK)
+ * Copyright 2014 MyBB Group, All Rights Reserved
+ * Project Copyright 2016 flashydave, All Rights Reserved
+ *
+ */
+
+// The friendly name of the language
+$langinfo['name'] = "English (UK)";
+
+// The author of the language
+$langinfo['author'] = "flashydave";
+
+// The language authors website
+$langinfo['website'] = "https://community.mybb.com/user-104962.html";
+
+// The documentation site link
+$langinfo['docs_link'] = "https://community.mybb.com/thread-189678.html";
+
+// The documentation FAQs site link
+$langinfo['common_issues_link'] = "https://community.mybb.com/thread-189678.html";
+
+// The support website link
+$langinfo['support_link'] = "https://community.mybb.com/thread-189678.html";
+
+// The additional website name
+$langinfo['additional_name'] = "https://community.mybb.com/mods.php?action=view&pid=667";
+
+// Compatible version of MyBB
+$langinfo['version'] = "1828";
+
+// Sets if the translation includes the Admin CP (1 = yes, 0 = no)
+$langinfo['admin'] = 1;
+
+// Sets if the language is RTL (Right to Left) (1 = yes, 0 = no)
+$langinfo['rtl'] = 0;
+
+// Sets the lang in the <html> on all pages
+$langinfo['htmllang'] = "en";
+
+// Sets the character set, blank uses the default.
+$langinfo['charset'] = "UTF-8";
+[/code]
+
+ISSUE:
+
+notice how the default english.php file uses:
+[code]
+// Sets the lang in the <html> on all pages
+$langinfo['htmllang'] = "en";
+[/code]
+
+as does the newly created englishgb.php file? That is the issue I was hinting to, and while yes this works, if  both files define as en and will work if you need to then later do any css based translations definative to say as far as english translations, all must be defined as only "en" as is...
+
+it does not in a sense work if you need to do css based translations definative to say en-us and or en-gb
+
+Thus the issue...
+
+example of where as such in default you would not be able to translate via css correctly:
+
+[code]
+  /* english */
+  .something:lang(en):after{
+    content: 'some text for en';
+   }
+[/code]
+
+This will only work if both english files are set to "en"
+
+
+Now if you define like:
+
+[code]
+  /* english us */
+  .something:lang(en-us):after{
+    content: 'some text for en-us';
+   }
+  /* english gb */
+  .something:lang(en-gb):after{
+    content: 'some text for en-gb';
+   }
+[/code]
+
+-- This will not work if both english files are set to "en"
+
+-- This will work if english files are set correctly to "en-us" & "en-gb" ...make sense?!!!
+
+So, in theory, when you think in that mindset, then as such there is actually the primary def of "en" and sub defs as such is something one may find the need to factor in the future if finding the need to css translate something for whatever reasons be it say in a plugin, template or theme stylesheet say for example in 1,2,3 diff ways for "en" / "en-" / "en-" translations later on for example:
+
+ie: primary def, sub def, sub def...
+[code]
+  /* english */
+  .something:lang(en):after{
+    content: 'some text for en';
+   }
+  /* english us */
+  .something:lang(en-us):after{
+    content: 'some text for en-us';
+   }
+  /* english gb */
+  .something:lang(en-gb):after{
+    content: 'some text for en-gb';
+   }
+[/code]
+
+thus why I pointed to the issue in the respective lang pack definition file by default
+
+As thus will fail because by default they define the default English lang pack "en" when in fact it should be en-us since they titled it english (american, ie: english us, en-us) * hopefully that makes sense, lol.
+
+so in reality the default english (US) ie: en-us lang files should be changed to:
+
+in english.php
+
+[code]
+// Sets the lang in the <html> on all pages
+$langinfo['htmllang'] = "en-us";
+[/code]
+
+and english (UK) ie: en-gb
+
+in englishgb.php
+
+[code]
+// Sets the lang in the <html> on all pages
+$langinfo['htmllang'] = "en-gb";
+[/code]
+
+This also is something handy to think on as for example some other languages like German for one example, there are more than one translation of such in the pack, but both german dirs in pack define say as "de" rather than factoring "subs" and as such any future desire to say css translate anything would have to use only the primary define "de"
+
+ie:
+
+[code]  
+  /* german */
+  .something:lang(de):after{
+    content: 'some text for de';
+   }
+[/code]
+
+Mkay, hopefully that was simple enough to understand and also makes sense as to why I pointed out something that can be considered an existing issue.
+
+Once that is done, the lang package shall be recognized and usable, but, as such these days in 1830 such is rather outdated as one will notice quickly once lang file is created and lang pack is recognized.
+
+Next, as far as such package being back from 1.8.6 and now say using currently there are a handful of things missing and this will touch on a few simply to start getting one sorted...
+
+frontend side...
+
+global.lang.php needs such added:
+
+[code]
+$l['forum_closed'] = "Forum is Closed";
+$l['confirm_title'] = "Please Confirm";
+$l['expcol_collapse'] = '[-]';
+$l['expcol_expand'] = '[+]';
+$l['bottomlinks_forumteam'] = "Forum Team";
+$l['bottomlinks_markread'] = "Mark all forums read";
+$l['today_rel'] = "<span title=\"{1}\">Today</span>";
+$l['ratings_update_error'] = 'There was an error updating the rating.';
+$l['folder_unread'] = "Unread";
+$l['editor_mixer'] = "Mixer";
+$l['timezone_gmt_850'] = "(GMT +8:30) Pyongyang";
+$l['timezone_gmt_875'] = "(GMT +8:45) Eucla";
+[/code]
+
+index.lang.php needs such added:
+
+[code]
+$l['board_stats_link_separator'] = ' | ';
+[/code]
+
+showthread.lang.php needs such added:
+
+[code]
+$l['post_deleted_error'] = 'You can not perform this action to a deleted post.';
+[/code]
+
+memberlist.lang.php needs such added:
+
+[code]
+$l['exactly'] = "Exactly:";
+[/code]
+
+search.lang.php needs such added:
+
+[code]
+$l['sort_views'] = "Sort Results by view count";
+$l['sort_replies'] = "Sort Results by reply count";
+[/code]
+
+usercp.lang.php needs such added:
+
+[code]
+$l['closed_thread'] = "Closed Thread";
+[/code]
+
+member.lang.php needs such added:
+
+[code]
+$l['registration_ip'] = "Registration IP:";
+$l['last_known_ip'] = "Last Known IP:";
+[/code]
+
+forumdisplay.php needs such added:
+
+[code]
+$l['closed_thread'] = "Closed Thread";
+[/code]
+
+Admin side...
+
+admin/config_module_meta.lang.php needs such added:
+
+[code]
+$l['report_reasons'] = "Report Reasons";
+[/code]
+
+admin/user_module_meta.lang.php needs such added:
+
+[code]
+$l['awaiting_activation'] = "Awaiting Activation";
+[/code]
+
+admin/forum_management.lang.php needs such added:
+
+[code]
+$l['forum_thread_prefixes'] = "Thread Prefixes";
+[/code]
+
+admin/forum_attachments.lang.php needs such added:
+
+[code]
+$l['poster_is'] = "Poster is";
+$l['poster_is_either'] = "User or Guest";
+$l['poster_is_user'] = "Users Only";
+$l['poster_is_guest'] = "Guests Only";
+[/code]
+
+admin/config_thread_prefixes.lang.php needs such added:
+
+[code]
+$l['forums'] = "Available in Forums";
+[/code]
+
+admin/config_badwords.lang.php needs such added:
+
+[code]
+$l['add_bad_word_desc'] = "Here you can add a word filter and its replacement.";
+$l['regex'] = "Regular Expression";
+[/code]
+
+admin/config_questions.lang.php needs such added:
+
+[code]
+$l['shown'] = "Shown";
+$l['preview_question'] = "Preview Question";
+[/code]
+
+admin/style_templates.lang.php needs such added:
+
+[code]
+$l['group_mycode'] = "MyCode";
+[/code]
+
+admin/style_themes.lang.php needs such added:
+
+[code]
+$l['theme_thumbnail'] = "Theme Thumbnail";
+[/code]
+
+etc, etc... & most likely there may be more as one notices / finds such, but, just noting all found here initially at least of all the first few warnings about such noticed in relation to subject matter and current usage so as to give a good idea on how to bring the outdated and non functionable language pack back to life for usage on 1830. 
+
+Best of luck.
+

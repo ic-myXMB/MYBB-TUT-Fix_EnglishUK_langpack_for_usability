@@ -8,7 +8,7 @@
 
 For Tutorial:
 
-https://github.com/ic-myXMB/MYBB-TUT-Fix_EnglishUK_langpack_for_usability/blob/main/TUT-Fix_EnglishUK_langpack_for_usabilty.txt
+https://github.com/ic-myXMB/MYBB-TUT-Fix_EnglishUK_langpack_for_usability/blob/main/TUT-Fix_EnglishUK_langpack_for_usability.txt
 
 
 Link to language pack that needs fix:
